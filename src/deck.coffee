@@ -1,22 +1,38 @@
 _ = require 'underscore'
 Card = require('./card').Card
+CardSet = require('./card_set').CardSet
+
+class Deck extends CardSet
 
 
-class Deck
-  suits: ['Spades','Clubs','Hearts','Diamonds']
-  ranks: ['A','2','3','4','5','6','7','8','9','10','J','Q','K']
   constructor: ->
+    @hands = []
     @discards = []
-    @cards = []
+    super()
     _.each @suits, (suit) =>
       _.each @ranks, (rank) =>
         @cards.push new Card(rank, suit)
 
-  shuffle: ->
-    @cards = _.shuffle(@cards)
+  count: ->
+    @cards.length
+
+  cut: ->
+    _.sample @cards
+
+  deal: (hands, count) ->
+    _.times count, =>
+      _.each hands, (hand) =>
+        hand.add @draw()
+    hands
+
+  draw: ->
+    @cards.shift()
+
+
+
 
   discard: ->
-    discardedCard = @cards.shift()
+    discardedCard = @draw()
     @discards.push discardedCard
     discardedCard
 
