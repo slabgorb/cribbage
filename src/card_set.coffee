@@ -12,6 +12,7 @@ class CardSet
   count: ->
     @cards.length
 
+
   find: (args...) ->
     switch
       when typeof args[0] == 'number' then @cards[args[0]]
@@ -24,6 +25,10 @@ class CardSet
 
   add: (card) ->
     @cards.push card
+
+  remove: (card...) ->
+    card = @find(card...)
+    @cards = _.reject(@cards, (c) -> c == card)
 
   shuffle: ->
     @cards = _.shuffle(@cards)

@@ -7,7 +7,9 @@ class Deck extends CardSet
 
   constructor: ->
     @hands = []
-    @discards = []
+    @discards = new CardSet()
+    @crib = new CardSet()
+    @cut = null
     super()
     _.each @suits, (suit) =>
       _.each @ranks, (rank) =>
@@ -16,8 +18,9 @@ class Deck extends CardSet
   count: ->
     @cards.length
 
-  cut: ->
-    _.sample @cards
+  cutCard: ->
+    @cut = _.sample @cards
+    @cut
 
   deal: (hands, count) ->
     _.times count, =>
@@ -33,7 +36,7 @@ class Deck extends CardSet
 
   discard: ->
     discardedCard = @draw()
-    @discards.push discardedCard
+    @discards.add discardedCard
     discardedCard
 
 root = exports ? window

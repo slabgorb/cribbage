@@ -55,20 +55,49 @@ describe 'Hand', ->
     @deck.deal([@hand], 5)
     @hand.discard(1).rank.should.equal '2'
     @hand.count().should.equal 4
-    @deck.discards.length.should.equal 1
+    @deck.discards.count().should.equal 1
     @hand.discard('A','Spades')
     @hand.count().should.equal 3
-    @deck.discards.length.should.equal 2
+    @deck.discards.count().should.equal 2
 
   it 'puts cards in the crib', ->
     @deck.deal([@hand], 6)
-    @hand.toCrib(1)
+    @hand.toCrib(0)
+    @hand.toCrib(0)
+    @deck.crib.count().should.equal 2
+    @hand.count().should.equal 4
 
-  it 'scores', ->
+  it 'scores two card fifteens', ->
     @hand.add(new Card('Q','Spades'))
     @hand.add(new Card('5','Diamonds'))
     @hand.add(new Card('8','Clubs'))
+    @hand.add(new Card('7','Clubs'))
+    @deck.cut = new Card('8','Spades')
+    @hand.countFifteens(@hand.withCut()).should.equal 6
 
+  it 'scores three card fifteens', ->
+    @hand.add(new Card('3','Spades'))
+    @hand.add(new Card('4','Diamonds'))
+    @hand.add(new Card('8','Clubs'))
+    @hand.add(new Card('10','Clubs'))
+    @deck.cut = new Card('Q','Spades')
+    @hand.countFifteens(@hand.withCut()).should.equal 2
+
+  it 'scores four card fifteens', ->
+    @hand.add(new Card('3','Spades'))
+    @hand.add(new Card('4','Diamonds'))
+    @hand.add(new Card('7','Clubs'))
+    @hand.add(new Card('A','Clubs'))
+    @deck.cut = new Card('9','Spades')
+    @hand.countFifteens(@hand.withCut()).should.equal 2
+
+  it 'scores five card fifteens', ->
+    @hand.add(new Card('A','Spades'))
+    @hand.add(new Card('4','Diamonds'))
+    @hand.add(new Card('7','Clubs'))
+    @hand.add(new Card('A','Clubs'))
+    @deck.cut = new Card('2','Hearts')
+    @hand.countFifteens(@hand.withCut()).should.equal 2
 
 
 describe 'Deck', ->
@@ -77,17 +106,17 @@ describe 'Deck', ->
     @deck = new Deck()
 
   it 'cuts the cards', ->
-    @deck.cut().should.be.instanceOf(Card)
+    @deck.cutCard().should.be.instanceOf(Card)
 
   it 'creates a deck of 52 cards', ->
     @deck.count().should.equal 52
-    @deck.discards.length.should.equal 0
+    @deck.discards.count().should.equal 0
 
   it 'discards the top card from the deck', ->
     discard = @deck.discard()
     discard.suit.should.equal 'Spades'
     discard.rank.should.equal 'A'
-    @deck.discards.length.should.equal 1
+    @deck.discards.count().should.equal 1
 
   it 'deals cards', ->
     [hand1, hand2] = [new Hand(@deck), new Hand(@deck)]
