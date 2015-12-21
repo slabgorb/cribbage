@@ -100,6 +100,31 @@ describe 'Hand', ->
     @hand.countFifteens(@hand.withCut()).should.equal 2
 
 
+  it 'scores simple pairs', ->
+    @hand.add(new Card('A','Spades'))
+    @hand.add(new Card('4','Diamonds'))
+    @hand.add(new Card('7','Clubs'))
+    @hand.add(new Card('A','Clubs'))
+    @deck.cut = new Card('2','Hearts')
+    @hand.countPairs(@hand.withCut()).should.equal 2
+
+  it 'scores three of a kind', ->
+    @hand.add(new Card('A','Spades'))
+    @hand.add(new Card('A','Diamonds'))
+    @hand.add(new Card('7','Clubs'))
+    @hand.add(new Card('A','Clubs'))
+    @deck.cut = new Card('2','Hearts')
+    @hand.countPairs(@hand.withCut()).should.equal 6
+
+  it 'scores four of a kind', ->
+    @hand.add(new Card('A','Spades'))
+    @hand.add(new Card('A','Diamonds'))
+    @hand.add(new Card('7','Clubs'))
+    @hand.add(new Card('A','Clubs'))
+    @deck.cut = new Card('A','Hearts')
+    @hand.countPairs(@hand.withCut()).should.equal 12
+
+
 describe 'Deck', ->
 
   beforeEach ->
