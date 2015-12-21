@@ -47,16 +47,28 @@ describe 'Hand', ->
     @deck.deal([@hand], 5)
     @hand.find('A','Spades').rank.should.equal 'A'
     @hand.find('A','Spades').suit.should.equal 'Spades'
+    @hand.find(1).suit.should.equal 'Spades'
+    @hand.find(_.first(@hand.cards)).suit.should.equal 'Spades'
 
 
   it 'discards', ->
     @deck.deal([@hand], 5)
-    @hand.discard(4)
+    @hand.discard(1).rank.should.equal '2'
     @hand.count().should.equal 4
     @deck.discards.length.should.equal 1
-    @hand.discard(['A','Spades'])
+    @hand.discard('A','Spades')
     @hand.count().should.equal 3
     @deck.discards.length.should.equal 2
+
+  it 'puts cards in the crib', ->
+    @deck.deal([@hand], 6)
+    @hand.toCrib(1)
+
+  it 'scores', ->
+    @hand.add(new Card('Q','Spades'))
+    @hand.add(new Card('5','Diamonds'))
+    @hand.add(new Card('8','Clubs'))
+
 
 
 describe 'Deck', ->

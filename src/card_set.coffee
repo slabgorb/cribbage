@@ -12,8 +12,15 @@ class CardSet
   count: ->
     @cards.length
 
-  find: (rank, suit) ->
-    _.find(@cards, (card) -> card.rank == rank and card.suit == suit )
+  find: (args...) ->
+    switch
+      when typeof args[0] == 'number' then @cards[args[0]]
+      when args.length == 2 and typeof args[0] == 'string'
+        rank = args[0]
+        suit = args[1]
+        _.find(@cards, (card) -> card.rank == rank and card.suit == suit )
+      else
+        _.find(@cards, (card) -> card == args[0])
 
   add: (card) ->
     @cards.push card

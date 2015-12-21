@@ -6,16 +6,17 @@ class Hand extends CardSet
 
   constructor: (deck) ->
     @deck = deck
-    @crib = []
+    @crib = new CardSet()
     super()
 
-  discard: (card) ->
-    if typeof card is 'number'
-      card = @cards[card]
-    if typeof card is 'object' and card.length == 2
-      card = @find(card[0], card[1])
+  toCrib: (card) ->
+    @crib.add(card)
+
+  discard: (card...) ->
+    card = @find(card...)
     @deck.discards.push card
     @cards = _.reject(@cards, (c) -> c == card)
+    card
 
 
 root = exports ? window
