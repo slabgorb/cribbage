@@ -1,0 +1,26 @@
+{
+  "name": "cribbage",
+  "version": "1.0.0",
+  "description": "Play a game of cribbage against a computer.",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha --require coffee-script/register --compilers coffee:coffee-script/register"
+  },
+  "author": "Keith Avery",
+  "license": "ISC",
+  "devDependencies": {
+    "chai": "^3.4.1",
+    "mocha": "^2.3.4"
+  },
+  "dependencies": {
+    "coffee-script": "^1.10.0",
+    "underscore": "^1.8.3"
+  },
+  "repository": {
+    "type": "git",
+    "url":"https://github.com/slabgorb/cribbage.git"
+  }
+}
