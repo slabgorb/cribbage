@@ -99,7 +99,6 @@ describe 'Hand', ->
     @deck.cut = new Card('2','Hearts')
     @hand.countFifteens(@hand.withCut()).should.equal 2
 
-
   it 'scores simple pairs', ->
     @hand.add(new Card('A','Spades'))
     @hand.add(new Card('4','Diamonds'))
@@ -116,14 +115,21 @@ describe 'Hand', ->
     @deck.cut = new Card('2','Hearts')
     @hand.countPairs(@hand.withCut()).should.equal 6
 
-  it 'scores four of a kind', ->
+  it 'scores four card flush', ->
+    @hand.add(new Card('2','Spades'))
+    @hand.add(new Card('4','Spades'))
+    @hand.add(new Card('7','Spades'))
     @hand.add(new Card('A','Spades'))
-    @hand.add(new Card('A','Diamonds'))
-    @hand.add(new Card('7','Clubs'))
-    @hand.add(new Card('A','Clubs'))
-    @deck.cut = new Card('A','Hearts')
-    @hand.countPairs(@hand.withCut()).should.equal 12
+    @deck.cut = new Card('3','Hearts')
+    @hand.countFlushes(@hand.cards, @deck.cut).should.equal 4
 
+  it 'scores five card flush', ->
+    @hand.add(new Card('2','Spades'))
+    @hand.add(new Card('4','Spades'))
+    @hand.add(new Card('7','Spades'))
+    @hand.add(new Card('A','Spades'))
+    @deck.cut = new Card('3','Spades')
+    @hand.countFlushes(@hand.cards, @deck.cut).should.equal 5
 
 describe 'Deck', ->
 

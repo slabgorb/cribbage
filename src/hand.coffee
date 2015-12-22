@@ -26,14 +26,32 @@ class Hand extends CardSet
     _.flatten [@cards, @deck.cut]
 
   score: ->
-    cardsForScoring = @withCut()
+    @decc
     score = 0
-    score += @countFifteens(cardsForScoring)
+    score += @countFifteens(@withCut())
+    score += @countPairs(@withCut())
+    score += @countFlushes(@cards, @deck.cut)
 
   countRuns: (cards) ->
     score = 0
+    scored = []
     scoreRuns = (cards, otherCards) ->
-      _.noop()
+      low = @rankVal(_.first(cards))
+      high = @rankVal(_.last(cards))
+      _.each otherCards, (otherCard) ->
+        cardVal = @rankVal(otherCard)
+        if cardVal = low - 1 || cardVal = high + 1
+          cards = _.flatten([cards, otherCard]).sort(Card.sort)
+
+  rankVal: (card) ->
+    @ranks.indexOf(card.rank) + 1
+
+  countFlushes: (cards, cut) ->
+    score = 0
+    score = 4 if _.uniq(_.map(cards, (card) => card.suit)).length == 1
+    # only score the cut card as part of the flush if we already have the flush
+    score = 5 if cut.suit == cards[0].suit and score == 4
+    score
 
   countPairs: (cards) ->
     score = 0
