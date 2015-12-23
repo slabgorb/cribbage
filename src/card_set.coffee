@@ -2,7 +2,7 @@ _ = require 'underscore'
 Card = require('./card').Card
 
 class CardSet
-  suits: ['Spades','Clubs','Hearts','Diamonds']
+  suits: ['Clubs','Diamonds','Hearts','Spades']
   ranks: ['A','2','3','4','5','6','7','8','9','10','J','Q','K']
 
   constructor: ->
@@ -11,6 +11,8 @@ class CardSet
   count: ->
     @cards.length
 
+  sort: ->
+    _.sortBy @cards, (card) => (@ranks.indexOf(card.rank) * 5) + (@suits.indexOf(card.suit))
 
   find: (args...) ->
     switch

@@ -35,16 +35,29 @@ class Hand extends CardSet
   countRuns: (cards) ->
     score = 0
     scored = []
-    scoreRuns = (cards, otherCards) ->
-      low = @rankVal(_.first(cards))
-      high = @rankVal(_.last(cards))
-      _.each otherCards, (otherCard) ->
-        cardVal = @rankVal(otherCard)
-        if cardVal = low - 1 || cardVal = high + 1
-          cards = _.flatten([cards, otherCard]).sort(Card.sort)
+
+    combos = (cards) ->
+      allCombos = [cards]
+      f = (n, cards, combinations, all) ->
+        if n == 0
+          if combinations.length > 0
+            all.push combinations
+          return
+        _.each cards, (card, index, cards) ->
+          f(n - 1, _.rest(cards, index + 1), combinations.push(card), all)
+      f(n, cards, [], allCombos) for n in [3..cards.length]
+
+    isRun = (card, index, cards) ->
+      if index == cards.length - 1
+        return true
+      card.rankVal() == cards[index + 1].rankVal()
+
+    combinations = _.map combos(cards), (cmbo) -> cmbo.sort(Card.sort)
+    runCombinations = _.all(combinations, isRun)
+    score
 
   rankVal: (card) ->
-    @ranks.indexOf(card.rank) + 1
+    card.rankVal()
 
   countFlushes: (cards, cut) ->
     score = 0

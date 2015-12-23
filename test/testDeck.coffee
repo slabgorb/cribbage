@@ -6,6 +6,23 @@ CoffeeScript.register()
 Deck = require('../src/deck.coffee').Deck
 Card = require('../src/card.coffee').Card
 Hand = require('../src/hand.coffee').Hand
+CardSet = require('../src/card_set.coffee').CardSet
+
+describe 'CardSet', ->
+  beforeEach ->
+    @cardSet = new CardSet()
+
+  it 'adds a card to the set', ->
+    @cardSet.add(new Card('J', 'Spades'))
+    @cardSet.count().should.equal 1
+    (_.first @cardSet.cards).rank.should.equal 'J'
+    (_.first @cardSet.cards).suit.should.equal 'Spades'
+
+  it 'sorts cards by rand and suit', ->
+    @cardSet.add(new Card('J', 'Spades'))
+    @cardSet.add(new Card('A', 'Hearts'))
+    @cardSet.add(new Card('J', 'Diamonds'))
+    (_.map @cardSet.sort(), (card) -> card.rank + card.suit).join().should.equal "AHearts,JDiamonds,JSpades"
 
 describe 'Card', ->
   it 'knows its rank and suit', ->
@@ -45,10 +62,10 @@ describe 'Hand', ->
 
   it 'finds a card', ->
     @deck.deal([@hand], 5)
-    @hand.find('A','Spades').rank.should.equal 'A'
-    @hand.find('A','Spades').suit.should.equal 'Spades'
-    @hand.find(1).suit.should.equal 'Spades'
-    @hand.find(_.first(@hand.cards)).suit.should.equal 'Spades'
+    @hand.find('A','Clubs').rank.should.equal 'A'
+    @hand.find('A','Clubs').suit.should.equal 'Clubs'
+    @hand.find(1).suit.should.equal 'Clubs'
+    @hand.find(_.first(@hand.cards)).suit.should.equal 'Clubs'
 
 
   it 'discards', ->
@@ -56,7 +73,7 @@ describe 'Hand', ->
     @hand.discard(1).rank.should.equal '2'
     @hand.count().should.equal 4
     @deck.discards.count().should.equal 1
-    @hand.discard('A','Spades')
+    @hand.discard('A','Clubs')
     @hand.count().should.equal 3
     @deck.discards.count().should.equal 2
 
@@ -131,6 +148,30 @@ describe 'Hand', ->
     @deck.cut = new Card('3','Spades')
     @hand.countFlushes(@hand.cards, @deck.cut).should.equal 5
 
+  it 'scores runs of 3', ->
+    @hand.add(new Card('2','Spades'))
+    @hand.add(new Card('4','Spades'))
+    @hand.add(new Card('7','Spades'))
+    @hand.add(new Card('9','Spades'))
+    @deck.cut = new Card('3','Spades')
+    @hand.countRuns(@hand.withCut()).should.equal 3
+
+  it 'scores runs of 4', ->
+    @hand.add(new Card('2','Spades'))
+    @hand.add(new Card('4','Spades'))
+    @hand.add(new Card('3','Spades'))
+    @hand.add(new Card('9','Spades'))
+    @deck.cut = new Card('A','Spades')
+    @hand.countRuns(@hand.withCut()).should.equal 4
+
+  it 'scores runs of 5', ->
+    @hand.add(new Card('2','Spades'))
+    @hand.add(new Card('4','Spades'))
+    @hand.add(new Card('3','Spades'))
+    @hand.add(new Card('5','Spades'))
+    @deck.cut = new Card('A','Spades')
+    @hand.countRuns(@hand.withCut()).should.equal 5
+
 describe 'Deck', ->
 
   beforeEach ->
@@ -145,7 +186,7 @@ describe 'Deck', ->
 
   it 'discards the top card from the deck', ->
     discard = @deck.discard()
-    discard.suit.should.equal 'Spades'
+    discard.suit.should.equal 'Clubs'
     discard.rank.should.equal 'A'
     @deck.discards.count().should.equal 1
 
