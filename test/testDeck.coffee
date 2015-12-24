@@ -200,6 +200,37 @@ describe 'Hand', ->
     @deck.cut = new Card('3','Spades')
     @hand.countRuns(@hand.withCut()).should.equal 8
 
+  it 'counts his nobs', ->
+    @hand.add(new Card('J','Spades'))
+    @hand.add(new Card('4','Spades'))
+    @hand.add(new Card('4','Spades'))
+    @hand.add(new Card('5','Spades'))
+    @deck.cut = new Card('3','Spades')
+    @hand.countNobs(@hand.cards, @deck.cut).should.equal 1
+
+  it 'scores a good hand', ->
+    @hand.add(new Card('J','Spades'))
+    @hand.add(new Card('4','Spades'))
+    @hand.add(new Card('4','Spades'))
+    @hand.add(new Card('5','Spades'))
+    @deck.cut = new Card('3','Spades')
+    @hand.score().should.equal 16
+
+  it 'scores a bad hand', ->
+    @hand.add(new Card('J','Clubs'))
+    @hand.add(new Card('2','Hearts'))
+    @hand.add(new Card('9','Spades'))
+    @hand.add(new Card('Q','Spades'))
+    @deck.cut = new Card('8','Hearts')
+    @hand.score().should.equal 0
+
+  it 'scores a perfect hand', ->
+    @hand.add(new Card('J','Spades'))
+    @hand.add(new Card('5','Diamonds'))
+    @hand.add(new Card('5','Hearts'))
+    @hand.add(new Card('5','Clubs'))
+    @deck.cut = new Card('5','Spades')
+    @hand.score().should.equal 29
 
 describe 'Deck', ->
 

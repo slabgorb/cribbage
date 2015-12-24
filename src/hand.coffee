@@ -31,6 +31,11 @@ class Hand extends CardSet
     score += @countFifteens(@withCut())
     score += @countPairs(@withCut())
     score += @countFlushes(@cards, @deck.cut)
+    score += @countRuns(@withCut())
+    score += @countNobs(@cards, @deck.cut)
+
+  countNobs: (cards, cut) ->
+    _.filter(cards, (card) -> card.rank == 'J' and card.suit == cut.suit).length
 
   countRuns: (cards) ->
     score = 0
