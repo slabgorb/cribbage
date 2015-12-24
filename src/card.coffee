@@ -8,15 +8,10 @@ class Card
     @suit = suit
 
   @sort: (cardA, cardB) ->
-    switch
-      when cardA.rank < cardB.rank then -1
-      when cardB.rank < cardA.rank then 1
-      when cardA.suit < cardB.suit then -1
-      when cardB.suit < cardA.suit then 1
-      else 0
+    cardA.rankVal() - cardB.rankVal()
 
   rankVal: ->
-    @ranks.indexOf(@rank)
+    @ranks.indexOf(@rank) + 1
 
 
   value: ->

@@ -36,25 +36,32 @@ class Hand extends CardSet
     score = 0
     scored = []
 
-    combos = (cards) ->
-      allCombos = [cards]
-      f = (n, cards, combinations, all) ->
+    combos = (a, min) ->
+      fn = (n, src, got, all) ->
         if n == 0
-          if combinations.length > 0
-            all.push combinations
+          if got.length > 0
+            all[all.length] = got
           return
-        _.each cards, (card, index, cards) ->
-          f(n - 1, _.rest(cards, index + 1), combinations.push(card), all)
-      f(n, cards, [], allCombos) for n in [3..cards.length]
+        j = 0
+        while j < src.length
+          fn n - 1, src.slice(j + 1), got.concat([ src[j] ]), all
+          j++
+
+      all = []
+      i = min
+      while i < a.length
+        fn i, a, [], all
+        i++
+      all.push a
+      all
 
     isRun = (card, index, cards) ->
-      if index == cards.length - 1
-        return true
-      card.rankVal() == cards[index + 1].rankVal()
+      if index == cards.length - 1 then true else  (card.rankVal() + 1) == cards[index + 1].rankVal()
 
-    combinations = _.map combos(cards), (cmbo) -> cmbo.sort(Card.sort)
-    runCombinations = _.all(combinations, isRun)
-    score
+    runCombinations = _.filter(_.map(combos(cards, 3), (cmbo) -> cmbo.sort(Card.sort)), (c) -> _.all(_.map(c, isRun)))
+    return 0 if runCombinations.length == 0
+    maxLength = _.max(_.map(runCombinations, (r) -> r.length))
+    _.filter(runCombinations, (r) -> r.length == maxLength).length * maxLength
 
   rankVal: (card) ->
     card.rankVal()

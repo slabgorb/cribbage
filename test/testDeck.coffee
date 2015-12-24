@@ -38,6 +38,10 @@ describe 'Card', ->
     card = new Card('9','Spades')
     card.value().should.equal 9
 
+  it 'knows the rank value of a card (for runs)', ->
+    card = new Card('A','Spades')
+    card.rankVal().should.equal 1
+
   it 'knows the value of a face card', ->
     card = new Card('J', 'Spades')
     card.value().should.equal 10
@@ -161,16 +165,41 @@ describe 'Hand', ->
     @hand.add(new Card('4','Spades'))
     @hand.add(new Card('3','Spades'))
     @hand.add(new Card('9','Spades'))
-    @deck.cut = new Card('A','Spades')
+    @deck.cut = new Card('5','Spades')
     @hand.countRuns(@hand.withCut()).should.equal 4
 
   it 'scores runs of 5', ->
+    @hand.add(new Card('K','Spades'))
+    @hand.add(new Card('Q','Spades'))
+    @hand.add(new Card('J','Spades'))
+    @hand.add(new Card('10','Spades'))
+    @deck.cut = new Card('9','Spades')
+    @hand.countRuns(@hand.withCut()).should.equal 5
+
+  it 'recognizes no runs', ->
+    @hand.add(new Card('K','Spades'))
+    @hand.add(new Card('J','Spades'))
+    @hand.add(new Card('9','Spades'))
+    @hand.add(new Card('7','Spades'))
+    @deck.cut = new Card('5','Spades')
+    @hand.countRuns(@hand.withCut()).should.equal 0
+
+  it 'scores double runs of 3', ->
     @hand.add(new Card('2','Spades'))
     @hand.add(new Card('4','Spades'))
-    @hand.add(new Card('3','Spades'))
+    @hand.add(new Card('4','Spades'))
+    @hand.add(new Card('9','Spades'))
+    @deck.cut = new Card('3','Spades')
+    @hand.countRuns(@hand.withCut()).should.equal 6
+
+  it 'scores double runs of 4', ->
+    @hand.add(new Card('2','Spades'))
+    @hand.add(new Card('4','Spades'))
+    @hand.add(new Card('4','Spades'))
     @hand.add(new Card('5','Spades'))
-    @deck.cut = new Card('A','Spades')
-    @hand.countRuns(@hand.withCut()).should.equal 5
+    @deck.cut = new Card('3','Spades')
+    @hand.countRuns(@hand.withCut()).should.equal 8
+
 
 describe 'Deck', ->
 
