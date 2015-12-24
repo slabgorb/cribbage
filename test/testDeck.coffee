@@ -52,6 +52,18 @@ describe 'Card', ->
     card = new Card('10', 'Spades')
     card.value().should.equal 10
 
+describe 'Crib', ->
+  beforeEach ->
+    @deck = new Deck()
+
+  it 'scores five card flush', ->
+    @deck.crib.add(new Card('2','Spades'))
+    @deck.crib.add(new Card('4','Spades'))
+    @deck.crib.add(new Card('7','Spades'))
+    @deck.crib.add(new Card('A','Spades'))
+    @deck.cut = new Card('3','Spades')
+    @deck.crib.countFlushes(@deck.crib.cards, @deck.cut).should.equal 5
+
 describe 'Hand', ->
   beforeEach ->
     @deck = new Deck()
@@ -184,7 +196,7 @@ describe 'Hand', ->
     @deck.cut = new Card('5','Spades')
     @hand.countRuns(@hand.withCut()).should.equal 0
 
-  it 'scores double runs of 3', ->
+  it 'counts double runs of 3', ->
     @hand.add(new Card('2','Spades'))
     @hand.add(new Card('4','Spades'))
     @hand.add(new Card('4','Spades'))
@@ -192,7 +204,15 @@ describe 'Hand', ->
     @deck.cut = new Card('3','Spades')
     @hand.countRuns(@hand.withCut()).should.equal 6
 
-  it 'scores double runs of 4', ->
+  it 'counts double double runs of 3', ->
+    @hand.add(new Card('2','Spades'))
+    @hand.add(new Card('4','Spades'))
+    @hand.add(new Card('4','Spades'))
+    @hand.add(new Card('3','Spades'))
+    @deck.cut = new Card('3','Spades')
+    @hand.countRuns(@hand.withCut()).should.equal 12
+
+  it 'counts double runs of 4', ->
     @hand.add(new Card('2','Spades'))
     @hand.add(new Card('4','Spades'))
     @hand.add(new Card('4','Spades'))
@@ -208,12 +228,20 @@ describe 'Hand', ->
     @deck.cut = new Card('3','Spades')
     @hand.countNobs(@hand.cards, @deck.cut).should.equal 1
 
-  it 'scores a good hand', ->
-    @hand.add(new Card('J','Spades'))
+  it 'scores a decent hand', ->
+    @hand.add(new Card('10','Spades'))
     @hand.add(new Card('4','Spades'))
-    @hand.add(new Card('4','Spades'))
-    @hand.add(new Card('5','Spades'))
-    @deck.cut = new Card('3','Spades')
+    @hand.add(new Card('2','Spades'))
+    @hand.add(new Card('3','Spades'))
+    @deck.cut = new Card('4','Clubs')
+    @hand.score().should.equal 14
+
+  it 'scores double double runs', ->
+    @hand.add(new Card('2','Spades'))
+    @hand.add(new Card('4','Clubs'))
+    @hand.add(new Card('4','Diamonds'))
+    @hand.add(new Card('3','Spades'))
+    @deck.cut = new Card('3','Clubs')
     @hand.score().should.equal 16
 
   it 'scores a bad hand', ->
@@ -231,6 +259,14 @@ describe 'Hand', ->
     @hand.add(new Card('5','Clubs'))
     @deck.cut = new Card('5','Spades')
     @hand.score().should.equal 29
+
+  it 'scores a 28 hand', ->
+    @hand.add(new Card('5','Spades'))
+    @hand.add(new Card('5','Diamonds'))
+    @hand.add(new Card('5','Hearts'))
+    @hand.add(new Card('5','Clubs'))
+    @deck.cut = new Card('Q','Spades')
+    @hand.score().should.equal 28
 
 describe 'Deck', ->
 

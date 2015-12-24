@@ -1,5 +1,6 @@
 _ = require 'underscore'
 Card = require('./card').Card
+Crib = require('./crib').Crib
 CardSet = require('./card_set').CardSet
 
 class Deck extends CardSet
@@ -8,7 +9,7 @@ class Deck extends CardSet
   constructor: ->
     @hands = []
     @discards = new CardSet()
-    @crib = new CardSet()
+    @crib = new Crib()
     @cut = null
     super()
     _.each @suits, (suit) =>

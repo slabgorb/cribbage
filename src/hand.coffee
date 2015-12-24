@@ -105,5 +105,6 @@ class Hand extends CardSet
       scoreFifteens([card], _.reject(cards, (c) -> c == card))
     score
 
+
 root = exports ? window
 root.Hand = Hand
