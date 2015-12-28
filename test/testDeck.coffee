@@ -8,6 +8,7 @@ Card = require('../src/card.coffee').Card
 Hand = require('../src/hand.coffee').Hand
 CardSet = require('../src/card_set.coffee').CardSet
 
+
 describe 'CardSet', ->
   beforeEach ->
     @cardSet = new CardSet()
@@ -63,6 +64,17 @@ describe 'Crib', ->
     @deck.crib.add(new Card('A','Spades'))
     @deck.cut = new Card('3','Spades')
     @deck.crib.countFlushes(@deck.crib.cards, @deck.cut).should.equal 5
+
+  it 'ignores four card flush', ->
+    @deck.crib.add(new Card('2','Spades'))
+    @deck.crib.add(new Card('4','Spades'))
+    @deck.crib.add(new Card('7','Spades'))
+    @deck.crib.add(new Card('A','Spades'))
+    @deck.cut = new Card('3','Hearts')
+    @deck.crib.countFlushes(@deck.crib.cards, @deck.cut).should.equal 0
+
+
+
 
 describe 'Hand', ->
   beforeEach ->

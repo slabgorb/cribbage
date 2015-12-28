@@ -5,7 +5,6 @@ CardSet = require('./card_set').CardSet
 
 class Deck extends CardSet
 
-
   constructor: ->
     @hands = []
     @discards = new CardSet()
@@ -31,9 +30,6 @@ class Deck extends CardSet
 
   draw: ->
     @cards.shift()
-
-
-
 
   discard: ->
     discardedCard = @draw()
