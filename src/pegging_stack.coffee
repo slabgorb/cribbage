@@ -19,5 +19,15 @@ class PeggingStack extends CardSet
       else
         notDone = false
     super(matches)
+
+  countRuns: (cards) ->
+
+
+  countFifteens: (cards) ->
+    if _.reduce(cards, ((memo, card) -> memo += card.value()), 0) == 15 then 2 else 0
+
+  countThirtyOnes: (cards) ->
+    if _.reduce(cards, ((memo, card) -> memo += card.value()), 0) == 31 then 2 else 0
+
 root = exports ? window
 root.PeggingStack = PeggingStack

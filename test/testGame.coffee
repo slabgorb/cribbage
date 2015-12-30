@@ -76,3 +76,28 @@ describe 'pegging', ->
     @game.playCard(new Card('3','Clubs'), @playerRed)
     @game.playCard(new Card('2','Diamonds'), @playerBlue)
     @game.peggingStack.countPairs(@game.peggingStack.cards).should.equal 0
+
+  it 'counts fifteens with two cards', ->
+    @game.playCard(new Card('10','Spades'), @playerBlue)
+    @game.playCard(new Card('5','Clubs'), @playerRed)
+    @game.peggingStack.countFifteens(@game.peggingStack.cards).should.equal 2
+
+  it 'counts fifteens with three cards', ->
+    @game.playCard(new Card('7','Spades'), @playerBlue)
+    @game.playCard(new Card('7','Clubs'), @playerRed)
+    @game.playCard(new Card('A','Clubs'), @playerBlue)
+    @game.peggingStack.countFifteens(@game.peggingStack.cards).should.equal 2
+
+  it 'counts fifteens with no fifteens', ->
+    @game.playCard(new Card('7','Spades'), @playerBlue)
+    @game.playCard(new Card('7','Clubs'), @playerRed)
+    @game.playCard(new Card('2','Clubs'), @playerBlue)
+    @game.peggingStack.countFifteens(@game.peggingStack.cards).should.equal 0
+
+
+  it 'counts thirty-ones', ->
+    @game.playCard(new Card('10','Spades'), @playerBlue)
+    @game.playCard(new Card('Q','Clubs'), @playerRed)
+    @game.playCard(new Card('J','Clubs'), @playerBlue)
+    @game.playCard(new Card('A','Clubs'), @playerRed)
+    @game.peggingStack.countThirtyOnes(@game.peggingStack.cards).should.equal 2
