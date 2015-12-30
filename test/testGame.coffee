@@ -5,6 +5,7 @@ _ = require 'underscore'
 CoffeeScript.register()
 Player = require('../src/player.coffee').Player
 Game = require('../src/game.coffee').Game
+Card = require('../src/card.coffee').Card
 
 
 describe 'Player', ->
@@ -40,7 +41,32 @@ describe '2 Player Game', ->
     @game.winner().should.equal @playerBlue
 
   it 'makes a player a dealer', ->
-
+    @game.makeDealer(@playerBlue)
+    @game.dealer().should.equal @playerBlue
 
   it 'lets players put cards in crib', ->
     _.noop()
+
+describe 'pegging', ->
+  beforeEach ->
+    @playerBlue = new Player('Jack Player', 'Blue')
+    @playerRed = new Player('Jill Player', 'Red')
+    @game = new Game([@playerBlue, @playerRed])
+
+  it 'counts pairs in pegging', ->
+    @game.playCard(new Card('2','Spades'), @playerBlue)
+    @game.playCard(new Card('2','Clubs'), @playerRed)
+    @game.peggingStack.countPairs(@game.peggingStack.cards).should.equal 2
+
+  it 'counts three of a kind in pegging', ->
+    @game.playCard(new Card('2','Spades'), @playerBlue)
+    @game.playCard(new Card('2','Clubs'), @playerRed)
+    @game.playCard(new Card('2','Diamonds'), @playerRed)
+    @game.peggingStack.countPairs(@game.peggingStack.cards).should.equal 6
+
+  it 'counts four of a kind in pegging', ->
+    @game.playCard(new Card('2','Spades'), @playerBlue)
+    @game.playCard(new Card('2','Clubs'), @playerRed)
+    @game.playCard(new Card('2','Diamonds'), @playerBlue)
+    @game.playCard(new Card('2','Hearts'), @playerRed)
+    @game.peggingStack.countPairs(@game.peggingStack.cards).should.equal 12
