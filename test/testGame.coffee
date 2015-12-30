@@ -70,3 +70,9 @@ describe 'pegging', ->
     @game.playCard(new Card('2','Diamonds'), @playerBlue)
     @game.playCard(new Card('2','Hearts'), @playerRed)
     @game.peggingStack.countPairs(@game.peggingStack.cards).should.equal 12
+
+  it 'knows not to count pairs if something breaks it up', ->
+    @game.playCard(new Card('2','Spades'), @playerBlue)
+    @game.playCard(new Card('3','Clubs'), @playerRed)
+    @game.playCard(new Card('2','Diamonds'), @playerBlue)
+    @game.peggingStack.countPairs(@game.peggingStack.cards).should.equal 0
