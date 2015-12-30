@@ -10,6 +10,7 @@ class Player
     @score = 0
     @previousScore = 0
     @hand = new Hand()
+    @played = []
     @dealer = false
 
   increaseScore: (number) ->
@@ -21,6 +22,8 @@ class Player
     [@score, @previousScore]
 
   isDealer: -> @dealer
+
+
 
 
 

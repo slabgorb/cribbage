@@ -5,6 +5,7 @@ CardSet = require('./card_set').CardSet
 class PeggingStack extends CardSet
 
   countPairs: (cards) ->
+    cards ?= @cards
     # look at the last card played, then go through the stack in
     # reverse order to see how many match it
     cards = cards.reverse()
@@ -24,9 +25,11 @@ class PeggingStack extends CardSet
 
 
   countFifteens: (cards) ->
+    cards ?= @cards
     if _.reduce(cards, ((memo, card) -> memo += card.value()), 0) == 15 then 2 else 0
 
   countThirtyOnes: (cards) ->
+    cards ?= @cards
     if _.reduce(cards, ((memo, card) -> memo += card.value()), 0) == 31 then 2 else 0
 
 root = exports ? window

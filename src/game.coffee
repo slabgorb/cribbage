@@ -25,9 +25,14 @@ class Game
     _.find(@players, (player) -> player.score >= 121)
 
   scorePegging: (player) ->
-
+    score = 0
+    score += @peggingStack.countFifteens()
+    score += @peggingStack.countPairs()
+    score += @peggingStack.countThirtyOnes()
+    player.increaseScore(score)
 
   playCard: (card, player) ->
+    player.hand.play(card)
     @peggingStack.add card
     @scorePegging(player)
 

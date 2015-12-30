@@ -6,9 +6,14 @@ class Hand extends CardSet
 
   constructor: (deck) ->
     @deck = deck
+    @played = []
     super()
 
+  play: (card) ->
+    @played.push card
 
+  playableCards: ->
+    _.difference(cards, played)
 
   toCrib: (card...) ->
     card = @find(card...)
