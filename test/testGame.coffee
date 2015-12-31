@@ -1,12 +1,8 @@
-chai = require 'chai'
-chai.should()
-CoffeeScript = require('coffee-script')
+require './common'
 _ = require 'underscore'
-CoffeeScript.register()
 Player = require('../src/player.coffee').Player
 Game = require('../src/game.coffee').Game
 Card = require('../src/card.coffee').Card
-
 
 describe 'Player', ->
   beforeEach ->
@@ -54,6 +50,7 @@ describe 'pegging', ->
     @game = new Game([@playerBlue, @playerRed])
 
   it 'counts pairs in pegging', ->
+    @game.playCard(new Card('3','Clubs'), @playerRed)
     @game.playCard(new Card('2','Spades'), @playerBlue)
     @game.playCard(new Card('2','Clubs'), @playerRed)
     @game.peggingStack.countPairs().should.equal 2
@@ -101,6 +98,42 @@ describe 'pegging', ->
     @game.playCard(new Card('A','Clubs'), @playerRed)
     @game.peggingStack.countThirtyOnes().should.equal 2
 
+  it 'recognizes no runs', ->
+    @game.playCard(new Card('10','Spades'), @playerBlue)
+    @game.playCard(new Card('A','Clubs'), @playerRed)
+    @game.playCard(new Card('J','Clubs'), @playerBlue)
+    @game.peggingStack.countRuns().should.equal 0
+
+  it 'counts runs of 3', ->
+    @game.playCard(new Card('10','Spades'), @playerBlue)
+    @game.playCard(new Card('Q','Clubs'), @playerRed)
+    @game.playCard(new Card('J','Clubs'), @playerBlue)
+    @game.peggingStack.countRuns().should.equal 3
+
+  it 'counts runs of 4', ->
+    @game.playCard(new Card('A','Spades'), @playerBlue)
+    @game.playCard(new Card('2','Clubs'), @playerRed)
+    @game.playCard(new Card('3','Clubs'), @playerBlue)
+    @game.playCard(new Card('4','Clubs'), @playerRed)
+    @game.peggingStack.countRuns().should.equal 4
+
+  it 'counts runs of 5', ->
+    @game.playCard(new Card('A','Spades'), @playerBlue)
+    @game.playCard(new Card('2','Clubs'), @playerRed)
+    @game.playCard(new Card('3','Clubs'), @playerBlue)
+    @game.playCard(new Card('4','Clubs'), @playerRed)
+    @game.playCard(new Card('5','Clubs'), @playerBlue)
+    @game.peggingStack.countRuns().should.equal 5
+
+  it 'counts runs of 6', ->
+    @game.playCard(new Card('A','Spades'), @playerBlue)
+    @game.playCard(new Card('2','Clubs'), @playerRed)
+    @game.playCard(new Card('3','Clubs'), @playerBlue)
+    @game.playCard(new Card('4','Clubs'), @playerRed)
+    @game.playCard(new Card('5','Clubs'), @playerBlue)
+    @game.playCard(new Card('6','Clubs'), @playerRed)
+    @game.peggingStack.countRuns().should.equal 6
+
   it 'scores 15 pegging for a player', ->
     @game.playCard(new Card('10','Spades'), @playerBlue)
     @game.playCard(new Card('5','Clubs'), @playerRed)
@@ -109,4 +142,25 @@ describe 'pegging', ->
   it 'scores pair pegging for a player', ->
     @game.playCard(new Card('10','Spades'), @playerBlue)
     @game.playCard(new Card('10','Clubs'), @playerRed)
+    @playerRed.score.should.equal 2
+
+  it 'scores a pegging series', ->
+    @game.playCard(new Card('10','Spades'), @playerBlue)
+    @game.playCard(new Card('5','Clubs'), @playerRed)
+    @game.peggingStack.countFifteens().should.equal 2
+    @game.peggingStack.countRuns().should.equal 0
+    @game.peggingStack.countPairs().should.equal 0
+    @playerBlue.score.should.equal 0
+    @playerRed.score.should.equal 2
+    @game.playCard(new Card('5','Diamonds'), @playerBlue)
+    @game.peggingStack.countPairs().should.equal 2
+    @game.peggingStack.countRuns().should.equal 0
+    @game.peggingStack.countFifteens().should.equal 0
+    @playerBlue.score.should.equal 2
+    @playerRed.score.should.equal 2
+    @game.playCard(new Card('10','Clubs'), @playerRed)
+    @game.peggingStack.countPairs().should.equal 0
+    @game.playCard(new Card('A','Spades'), @playerBlue)
+    @game.peggingStack.countThirtyOnes().should.equal 2
+    @playerBlue.score.should.equal 4
     @playerRed.score.should.equal 2

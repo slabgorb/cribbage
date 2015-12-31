@@ -64,10 +64,9 @@ class Hand extends CardSet
       all.push a
       all
 
-    isRun = (card, index, cards) ->
-      if index == cards.length - 1 then true else  (card.rankVal() + 1) == cards[index + 1].rankVal()
 
-    runCombinations = _.filter(_.map(combos(cards, 3), (cmbo) -> cmbo.sort(Card.sort)), (c) -> _.all(_.map(c, isRun)))
+
+    runCombinations = _.filter(_.map(combos(cards, 3), (cmbo) => cmbo.sort(Card.sort)), (c) => _.all(_.map(c, @isRun)))
     return 0 if runCombinations.length == 0
     maxLength = _.max(_.map(runCombinations, (r) -> r.length))
     _.filter(runCombinations, (r) -> r.length == maxLength).length * maxLength

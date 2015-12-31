@@ -8,8 +8,7 @@ class PeggingStack extends CardSet
     cards ?= @cards
     # look at the last card played, then go through the stack in
     # reverse order to see how many match it
-    cards = cards.reverse()
-
+    cards = cards.concat().reverse()
     compareCard = _.first(cards)
     restOfStack = _.rest(cards)
     matches = [compareCard]
@@ -22,6 +21,14 @@ class PeggingStack extends CardSet
     super(matches)
 
   countRuns: (cards) ->
+    cards ?= @cards
+    return 0 if cards.length < 3 # can only have runs of 3 or more
+    score = 0
+    _.each [cards.length - 3..0], (count) =>
+      testRun = cards.slice(count).sort(Card.sort)
+      if _.all(_.map(testRun, @isRun))
+        score = _.max([score, testRun.length])
+    score
 
 
   countFifteens: (cards) ->

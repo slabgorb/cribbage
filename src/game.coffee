@@ -28,6 +28,7 @@ class Game
     score = 0
     score += @peggingStack.countFifteens()
     score += @peggingStack.countPairs()
+    score += @peggingStack.countRuns()
     score += @peggingStack.countThirtyOnes()
     player.increaseScore(score)
 

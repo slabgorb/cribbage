@@ -1,8 +1,5 @@
-chai = require 'chai'
-chai.should()
-CoffeeScript = require('coffee-script')
+require './common'
 _ = require 'underscore'
-CoffeeScript.register()
 Deck = require('../src/deck.coffee').Deck
 Card = require('../src/card.coffee').Card
 Hand = require('../src/hand.coffee').Hand

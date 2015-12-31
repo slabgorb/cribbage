@@ -14,6 +14,9 @@ class CardSet
   count: ->
     @cards.length
 
+  isRun: (card, index, cards) ->
+    if index == cards.length - 1 then true else  (card.rankVal() + 1) == cards[index + 1].rankVal()
+
   sort: ->
     _.sortBy @cards, (card) => (@ranks.indexOf(card.rank) * 5) + (@suits.indexOf(card.suit))
 
