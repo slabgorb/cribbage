@@ -1,6 +1,6 @@
 _ = require 'underscore'
-Card = require('./card').Card
-CardSet = require('./card_set').CardSet
+Card = require('./card.coffee').Card
+CardSet = require('./card_set.coffee').CardSet
 
 class PeggingStack extends CardSet
 

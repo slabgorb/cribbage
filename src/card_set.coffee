@@ -1,5 +1,5 @@
 _ = require 'underscore'
-Card = require('./card').Card
+Card = require('./card.coffee').Card
 
 class CardSet
   suits: ['Clubs','Diamonds','Hearts','Spades']

@@ -1,4 +1,4 @@
-CardSet = require('./card_set').CardSet
+CardSet = require('./card_set.coffee').CardSet
 fs = require 'fs'
 
 class Card

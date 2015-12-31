@@ -1,7 +1,7 @@
 _ = require 'underscore'
-Card = require('./card').Card
-Crib = require('./crib').Crib
-CardSet = require('./card_set').CardSet
+Card = require('./card.coffee').Card
+Crib = require('./crib.coffee').Crib
+CardSet = require('./card_set.coffee').CardSet
 
 class Deck extends CardSet
 

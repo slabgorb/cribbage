@@ -1,5 +1,5 @@
 _ = require 'underscore'
-Hand = require('./hand').Hand
+Hand = require('./hand.coffee').Hand
 
 class Crib extends Hand
 
