@@ -5,7 +5,6 @@ Card = require('../src/card.coffee').Card
 Hand = require('../src/hand.coffee').Hand
 CardSet = require('../src/card_set.coffee').CardSet
 
-
 describe 'CardSet', ->
   beforeEach ->
     @cardSet = new CardSet()

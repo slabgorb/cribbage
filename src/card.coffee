@@ -8,6 +8,7 @@ class Card
   constructor: (rank, suit) ->
     @rank = rank
     @suit = suit
+    @displaySvg = null
 
   @sort: (cardA, cardB) ->
     cardA.rankVal() - cardB.rankVal()
@@ -22,7 +23,8 @@ class Card
 
 
   display: ->
-
+    @displaySvg ||= fs.readFileSync("./svg/faces/#{@rank}_#{@suit}.svg")
+    @displaySvg
 
 
 root = exports ? window
