@@ -21,7 +21,7 @@ class Card
     if val == -1 then 10 else val + 1
 
 
-  url: -> "./svg/images/faces/#{@rank}_#{@suit}.svg"
+  url: -> "./svg/faces/#{@rank}_#{@suit}.svg"
 
 
 root = exports ? window
