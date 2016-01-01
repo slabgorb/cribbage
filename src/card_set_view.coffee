@@ -1,4 +1,4 @@
-CardView = require '../views/card_view.coffee'.CardView
+CardView = require('./card_view.coffee').CardView
 Backbone = require 'Backbone'
 _ = require 'underscore'
 $ = require 'jquery'
@@ -14,8 +14,7 @@ class CardSetView extends Backbone.View
 
   render: (options) ->
     console.log "card set", @cardSet
-    _.each @cardSet.cards, (card) ->
-      console.log card
+    _.each @cardSet.cards, (card) =>
       cv = new CardView(card)
       @childViews.push cv
       @$el.append(cv.render())

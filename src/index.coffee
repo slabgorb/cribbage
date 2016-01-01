@@ -6,8 +6,8 @@ Backbone = require 'backbone'
 _ = require 'underscore'
 Backbone.$ = $
 
-CardSetView = require('./views/card_set_view.coffee').CardSetView
-CardView = require('./views/card_view.coffee').CardView
+CardView = require('./card_view.coffee').CardView
+CardSetView = require('./card_set_view.coffee').CardSetView
 
 class App
   constructor: ->
