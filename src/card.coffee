@@ -8,7 +8,6 @@ class Card
   constructor: (rank, suit) ->
     @rank = rank
     @suit = suit
-    @displaySvg = null
 
   @sort: (cardA, cardB) ->
     cardA.rankVal() - cardB.rankVal()
@@ -22,9 +21,7 @@ class Card
     if val == -1 then 10 else val + 1
 
 
-  display: ->
-    @displaySvg ||= fs.readFileSync("./svg/faces/#{@rank}_#{@suit}.svg")
-    @displaySvg
+  url: -> "./svg/images/faces/#{@rank}_#{@suit}.svg"
 
 
 root = exports ? window
