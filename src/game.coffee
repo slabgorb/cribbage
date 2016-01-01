@@ -43,5 +43,4 @@ class Game
     @scorePegging(player)
 
 
-root = exports ? window
-root.Game = Game
+exports.Game = Game
