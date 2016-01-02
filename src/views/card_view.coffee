@@ -7,19 +7,30 @@ class CardView extends Backbone.View
   className: 'card'
   tagName: 'li'
 
-  initialize: (card, back) ->
+  initialize: (card, back, up = true) ->
     @card = card
-    @back = back
+    @cardBack = back
+    @up = up
+
+  events:
+    'click': 'eventClick'
+
+  eventClick: ->
+    @flip()
+    @render()
+
+  flip: ->
+    @up = not @up
 
   front: ->
     "./svg/faces/#{@card.rank}_#{@card.suit}.svg"
 
   back: ->
-    "./svg/backs/back_#{@back}.svg"
+    "./svg/backs/back_#{@cardBack}.svg"
 
-  render: (options = { faceUp: true } ) ->
-    svg = if options.faceUp? then @front() else @back()
-    @$el.css('background-image', "url(#{svg})")
+  render: ( options ) ->
+    image = if @up then @front() else @back()
+    @$el.css('background-image', "url(#{image})")
     @$el
 
 exports.CardView = CardView

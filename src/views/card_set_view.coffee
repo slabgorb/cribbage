@@ -9,13 +9,13 @@ class CardSetView extends Backbone.View
   className: 'card-set'
   tagName: 'ul'
 
-  initialize: (el, cardSet) ->
+  initialize: (cardSet) ->
     @cardSet = cardSet
     @childViews = []
 
-  render: (options) ->
+  render: (options = { faceUp: true }) ->
     _.each @cardSet.cards, (card) =>
-      cv = new CardView(card)
+      cv = new CardView(card, '00', options.faceUp)
       @childViews.push cv
       @$el.append(cv.render())
     @$el
