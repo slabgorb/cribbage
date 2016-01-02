@@ -6,18 +6,18 @@ Backbone.$ = $
 
 class CardSetView extends Backbone.View
 
-  className = 'card-set'
+  className: 'card-set'
+  tagName: 'ul'
 
-  initialize: (cardSet) ->
+  initialize: (el, cardSet) ->
     @cardSet = cardSet
     @childViews = []
 
   render: (options) ->
-    console.log "card set", @cardSet
     _.each @cardSet.cards, (card) =>
       cv = new CardView(card)
       @childViews.push cv
       @$el.append(cv.render())
-      @$el
+    @$el
 
 exports.CardSetView = CardSetView

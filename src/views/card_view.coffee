@@ -4,22 +4,22 @@ $ = require 'jquery'
 Backbone.$ = $
 
 class CardView extends Backbone.View
-  className = 'card'
+  className: 'card'
+  tagName: 'li'
 
   initialize: (card, back) ->
     @card = card
     @back = back
 
-  faceUp: ->
+  front: ->
     "./svg/faces/#{@card.rank}_#{@card.suit}.svg"
 
-  faceDown: ->
+  back: ->
     "./svg/backs/back_#{@back}.svg"
 
   render: (options = { faceUp: true } ) ->
-    svg = if options.faceUp? then @faceUp() else @faceDown
-    @$el.css('background-image', "url(#{@svg()})")
-    console.log 'hello'
+    svg = if options.faceUp? then @front() else @back()
+    @$el.css('background-image', "url(#{svg})")
     @$el
 
 exports.CardView = CardView

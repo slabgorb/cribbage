@@ -6,8 +6,8 @@ Backbone = require 'backbone'
 _ = require 'underscore'
 Backbone.$ = $
 
-CardView = require('./card_view.coffee').CardView
-CardSetView = require('./card_set_view.coffee').CardSetView
+CardView = require('./views/card_view.coffee').CardView
+CardSetView = require('./views/card_set_view.coffee').CardSetView
 
 class App
   constructor: ->
@@ -15,11 +15,10 @@ class App
     playerRed = new Player('Jill Player', 'Red')
     game = new Game([playerRed, playerBlue])
     game.deal()
-    blueHand = new CardSetView(playerBlue.hand)
-    redHand = new CardSetView(playerRed.hand)
-    $('#app').append('red hand')
-    $('#app').append(blueHand.render())
-    # $('#app').append(redHand.render())
+    blueHand = new CardSetView('#app', playerBlue.hand)
+    redHand = new CardSetView('#app', playerRed.hand)
+    $('#app').append blueHand.render()
+    $('#app').append redHand.render()
 
 $ ->
   app = new App()
