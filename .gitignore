@@ -3,3 +3,6 @@ lib
 .#*
 bundle.js
 .DS_Store
+stylesheets/*.css
+stylesheets/*.css.map
+.sass-cache

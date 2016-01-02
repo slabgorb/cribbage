@@ -7,7 +7,7 @@ module.exports = (grunt) ->
           'bundle.js': ['src/index.coffee']
         options:
           transform: ['coffeeify']
-    sass: compile: files: 'public/stylesheets/main.css': [ 'sass/main.scss' ]
+    sass: compile: files: 'stylesheets/main.css': [ 'sass/main.scss' ]
     watch:
       browserify:
         files: 'src/**/*'
@@ -37,4 +37,4 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks 'grunt-contrib-sass'
   grunt.loadNpmTasks 'grunt-contrib-watch'
   grunt.loadNpmTasks 'grunt-mocha-test'
-  grunt.registerTask 'default', [ 'browserify', 'watch' ]
+  grunt.registerTask 'default', [ 'sass', 'browserify', 'watch' ]

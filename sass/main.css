@@ -1,7 +1,18 @@
-body #app ul.card_set li.card {
-  background-repeat: no-repeat;
-  background-size: cover;
-  width: 100px;
-  margin: 10px; }
+body #app {
+  background-color: #045D05;
+  float: left;
+  width: 100%;
+  height: 100%; }
+  body #app ul.card-set {
+    clear: both; }
+    body #app ul.card-set li.card {
+      background-repeat: no-repeat;
+      background-size: contain;
+      width: 111px;
+      height: 162px;
+      margin: 10px 2px;
+      list-style-type: none;
+      display: inline;
+      float: left; }
 
 /*# sourceMappingURL=main.css.map */
