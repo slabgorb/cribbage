@@ -1,31 +1,43 @@
-$color_green_baize: #045D05;
+$color_card_set_background: #A0A0A0;
+$color_board_background: #663300;
 
 body {
 
   #app {
-    background-color: $color_green_baize;
     width: 100%;
     height: 100%;
-    .table {
-      width: calc(100% - 200px);
+    #table {
+      width: calc(100% - 270px);
+      height: 400px;
       float: left;
+      margin: 10px;
       ul.card-set {
+        border: 1px solid white;
+        background-color: $color_card_set_background;
+        height: 150px;
+        clear: left;
         li.card {
+          float: left;
           background-repeat: no-repeat;
           background-size: contain;
-          width: 111px;
-          height: 162px;
-          margin: 10px 2px;
+          width: 78px;
+          height: 121px;
+          margin: 12px 5px;
           list-style-type: none;
           display: inline;
         }
       }
     }
-    .board {
+    #board {
+      background-color: $color_board_background;
+      padding: 10px;
       float: right;
       width: 200px;
       height: 600px;
-      background-size: contain;
+      background-size: 90%;
+      background-position: 50% 50%;
+      border: 1px solid black;
+      margin: 10px;
       background-repeat: no-repeat;
       background-image: url('../svg/boards/board.svg');
     }
