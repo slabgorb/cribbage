@@ -12,8 +12,8 @@ class CardView extends Backbone.View
     @cardBack = back
     @up = up
 
-  events:
-    'click': 'eventClick'
+  # events:
+  #   'click': 'eventClick'
 
   eventClick: ->
     @flip()
