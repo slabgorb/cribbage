@@ -20,6 +20,18 @@ body {
         margin-left: 60px;
         height: 150px;
         clear: left;
+        &#crib, &#pegging {
+          width: 70%;
+          border: 1px solid white;
+          @include rounded();
+          background-color: rgba(255, 255, 255, 0.8);
+        }
+        &#crib {
+          background-color: rgba(255, 255, 255, 0.8);
+        }
+        &#pegging {
+          background-color: rgba(255, 255, 255, 0.8);
+        }
         li.card {
           @for $i from 1 through 6 {
             &:nth-child(#{$i}) {
@@ -38,8 +50,12 @@ body {
           list-style-type: none;
           display: inline;
           padding: 5px;
+
         }
       }
+    }
+    #deck {
+
     }
     #board {
       background-color: $color_board_background;
