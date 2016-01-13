@@ -4,7 +4,7 @@ module.exports = (grunt) ->
     browserify:
       dist:
         files:
-          'bundle.js': ['src/index.coffee']
+          'public/js/bundle.js': ['src/index.coffee']
         options:
           transform: ['coffeeify']
     sass: compile: files: 'stylesheets/main.css': [ 'sass/main.scss' ]
