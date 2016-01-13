@@ -9,7 +9,7 @@ port = 3001
 app.use(express.static('public'))
 
 app.get '/', (req, res) ->
-  res.sendFile('index.html', root: path.join(__dirname, '..'))
+  res.sendFile('index.html', root: path.join(__dirname, '../public'))
 
 http.listen port, ->
   console.log("listening on *:#{port}")

@@ -9,7 +9,7 @@
   "scripts": {
     "test": "mocha --require coffee-script/register --compilers coffee:coffee-script/register",
     "install": "grunt browserify",
-    "start": "coffee src/server.coffee"
+    "start": "./node_modules/nodemon/bin/nodemon.js --watch src src/server.coffee"
   },
   "author": "Keith Avery",
   "license": "ISC",
@@ -29,6 +29,7 @@
     "express": "^4.13.3",
     "jquery": "^2.1.4",
     "jquery-ui-browserify": "^1.11.0-pre-seelio",
+    "nodemon": "^1.8.1",
     "socket.io": "^1.4.4",
     "underscore": "^1.8.3"
   },
