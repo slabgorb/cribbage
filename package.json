@@ -8,7 +8,8 @@
   },
   "scripts": {
     "test": "mocha --require coffee-script/register --compilers coffee:coffee-script/register",
-    "install": "grunt browserify"
+    "install": "grunt browserify",
+    "start": "coffee src/server.coffee"
   },
   "author": "Keith Avery",
   "license": "ISC",
@@ -25,8 +26,10 @@
   "dependencies": {
     "backbone": "^1.2.3",
     "coffee-script": "^1.10.0",
+    "express": "^4.13.3",
     "jquery": "^2.1.4",
     "jquery-ui-browserify": "^1.11.0-pre-seelio",
+    "socket.io": "^1.4.4",
     "underscore": "^1.8.3"
   },
   "repository": {
